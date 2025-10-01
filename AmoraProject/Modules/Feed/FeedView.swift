@@ -39,7 +39,7 @@ struct FeedView: View {
                                         .overlay(alignment: .bottomTrailing) {
                                                     ZStack {
                                                         Circle()
-                                                            .fill(.red)
+                                                            .fill(.black)
                                                             .frame(width: 30, height: 30)
                                                         
                                                         Circle()
@@ -48,7 +48,7 @@ struct FeedView: View {
                                                         
                                                         Image(systemName: "plus")
                                                             .font(.system(size: 16, weight: .semibold))
-                                                            .foregroundColor(.black)
+                                                            .foregroundColor(.white)
                                                     }
                                                     .offset(x: 4, y: 4)
                                                 }
