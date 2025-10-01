@@ -34,16 +34,16 @@ struct HeaderView: View {
                     print("NotificationsButton pressed")
                 } label: {
                     Image(systemName: "heart")
-                        .bold()
                 }
 
                 Button {
                     print("MessagesButton pressed")
                 } label: {
                     Image(systemName: "paperplane")
-                        .bold()
                 }
             }
+            .bold()
+            .frame(maxWidth: .infinity)
         case .notifications:
             HStack {
                 Button {
@@ -63,7 +63,11 @@ struct HeaderView: View {
                         Image(systemName: "chevron.down")
                     }
                 }
+                
+                Spacer()
             }
+            .bold()
+            .frame(maxWidth: .infinity)
         case .messages:
             HStack {
                 HStack {
@@ -106,18 +110,20 @@ struct HeaderView: View {
                     }
                 }
             }
+            .bold()
+            .frame(maxWidth: .infinity)
         }
     }
 }
 
-#Preview {
+#Preview("Header for FeedView") {
     HeaderView(mode: .feed)
 }
 
-#Preview {
+#Preview("Header for NotificationsView") {
     HeaderView(mode: .notifications)
 }
 
-#Preview {
+#Preview("Header for MessagesView") {
     HeaderView(mode: .messages)
 }
