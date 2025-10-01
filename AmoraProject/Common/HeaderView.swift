@@ -97,7 +97,7 @@ struct HeaderView: View {
                         print("AIChatButton pressed")
                     } label: {
                         HStack {
-                            Image(systemName: "star")
+                            Image(systemName: "star") // TODO: Change
                         }
                     }
                     
@@ -105,7 +105,7 @@ struct HeaderView: View {
                         print("NewChatButton pressed")
                     } label: {
                         HStack {
-                            Image(systemName: "square.and.pencil")
+                            Image(systemName: "square.and.pencil") // TODO: Change
                         }
                     }
                 }
