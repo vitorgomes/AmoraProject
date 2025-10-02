@@ -9,28 +9,50 @@ import SwiftUI
 
 struct RootView: View {
     @State private var selectedTab: TabItem = .feed
+    @State private var navigationPath: [NavigationDestination] = []
     
     var body: some View {
-        ZStack {
-            Group {
-                switch selectedTab {
-                case .feed:
-                    FeedView()
-                case .search:
-                    SearchView()
-                case .newPost:
-                    NewPostView()
-                case .reels:
-                    ReelsView()
-                case .profile:
-                    ProfileView()
+        NavigationStack(path: $navigationPath) {
+            ZStack {
+                Group {
+                    switch selectedTab {
+                    case .feed:
+                        FeedView(navigationPath: $navigationPath)
+                    case .search:
+                        SearchView()
+                    case .newPost:
+                        NewPostView()
+                    case .reels:
+                        ReelsView()
+                    case .profile:
+                        ProfileView()
+                    }
+                }
+                
+                VStack {
+                    Spacer()
+                    customTabBar
                 }
             }
-
-            VStack {
-                Spacer()
-                customTabBar
+            .navigationDestination(for: NavigationDestination.self) { destination in
+                switch destination {
+                case .notifications:
+                    NotificationsView(navigationPath: $navigationPath)
+                        .navigationBarHidden(true)
+                case .messages:
+                    MessagesView(navigationPath: $navigationPath)
+                        .navigationBarHidden(true)
+                case .chat(let userName, let userImage, let isOnline, let lastTimeOnline, let timeUnit):
+                    ChatView(userName: userName,
+                             userImage: userImage,
+                             isOnline: isOnline,
+                             lastTimeOnline: lastTimeOnline,
+                             timeUnit: timeUnit,
+                             navigationPath: $navigationPath)
+                    .navigationBarHidden(true)
+                }
             }
+            .navigationBarHidden(true)
         }
         .ignoresSafeArea(.keyboard)
     }
@@ -41,6 +63,7 @@ struct RootView: View {
                 Button {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         selectedTab = tab
+                        navigationPath.removeAll()
                     }
                 } label: {
                     VStack(spacing: 4) {

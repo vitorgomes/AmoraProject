@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct FeedView: View {
+    @Binding var navigationPath: [NavigationDestination]
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                HeaderView(mode: .feed, geometry: geometry)
+                HeaderView(mode: .feed,
+                           geometry: geometry,
+                           navigationPath: $navigationPath)
                     .padding(.horizontal, 8)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -27,7 +31,7 @@ struct FeedView: View {
                                             width: geometry.size.width * 0.2,
                                             height: geometry.size.width * 0.2
                                         )
-
+                                    
                                     Image("catPhoto")
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
@@ -37,26 +41,27 @@ struct FeedView: View {
                                         )
                                         .clipShape(Circle())
                                         .overlay(alignment: .bottomTrailing) {
-                                                    ZStack {
-                                                        Circle()
-                                                            .fill(.black)
-                                                            .frame(width: 30, height: 30)
-                                                        
-                                                        Circle()
-                                                            .strokeBorder(.white, lineWidth: 3)
-                                                            .frame(width: 30, height: 30)
-                                                        
-                                                        Image(systemName: "plus")
-                                                            .font(.system(size: 16, weight: .semibold))
-                                                            .foregroundColor(.white)
-                                                    }
-                                                    .offset(x: 4, y: 4)
-                                                }
+                                            ZStack {
+                                                Circle()
+                                                    .fill(.black)
+                                                    .frame(width: 30, height: 30)
+                                                
+                                                Circle()
+                                                    .strokeBorder(.white, lineWidth: 3)
+                                                    .frame(width: 30, height: 30)
+                                                
+                                                Image(systemName: "plus")
+                                                    .font(.system(size: 16, weight: .semibold))
+                                                    .foregroundColor(.white)
+                                            }
+                                            .offset(x: 4, y: 4)
+                                        }
                                 }
                                 
                                 Text("Seu Story")
                             }
                         }
+                        .padding(.leading, 8)
                         
                         VStack {
                             ReelsButton(photo: "catPhoto",
@@ -92,7 +97,6 @@ struct FeedView: View {
                     }
                 }
                 .frame(height: 120)
-                .padding(.leading, 8)
                 
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
@@ -110,5 +114,5 @@ struct FeedView: View {
 }
 
 #Preview {
-    FeedView()
+    FeedView(navigationPath: .constant([]))
 }

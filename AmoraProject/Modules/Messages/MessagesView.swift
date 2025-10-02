@@ -9,11 +9,14 @@ import SwiftUI
 
 struct MessagesView: View {
     @State private var searchText: String = ""
+    @Binding var navigationPath: [NavigationDestination]
     
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                HeaderView(mode: .messages, geometry: geometry)
+                HeaderView(mode: .messages,
+                           geometry: geometry,
+                           navigationPath: $navigationPath)
                     .padding(.bottom, 16)
                     .padding(.horizontal, 8)
                 
@@ -50,21 +53,65 @@ struct MessagesView: View {
                     .padding([.horizontal, .vertical], 16)
                     
                     VStack {
-                        MessagePreviewView(geometry: geometry,
-                                           isOnline: false,
-                                           sizeMultiplier: 0.15)
+                        Button {
+                            navigationPath.append(.chat(
+                                userName: "funnyCats",
+                                userImage: "catPhoto",
+                                isOnline: false,
+                                lastTimeOnline: 1,
+                                timeUnit: "h"
+                            ))
+                        } label: {
+                            MessagePreviewView(geometry: geometry,
+                                               isOnline: false,
+                                               sizeMultiplier: 0.15)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                         
-                        MessagePreviewView(geometry: geometry,
-                                           isOnline: false,
-                                           sizeMultiplier: 0.15)
+                        Button {
+                            navigationPath.append(.chat(
+                                userName: "funnyCats",
+                                userImage: "catPhoto",
+                                isOnline: false,
+                                lastTimeOnline: 2,
+                                timeUnit: "h"
+                            ))
+                        } label: {
+                            MessagePreviewView(geometry: geometry,
+                                               isOnline: false,
+                                               sizeMultiplier: 0.15)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                         
-                        MessagePreviewView(geometry: geometry,
-                                           isOnline: false,
-                                           sizeMultiplier: 0.15)
+                        Button {
+                            navigationPath.append(.chat(
+                                userName: "funnyCats",
+                                userImage: "catPhoto",
+                                isOnline: true,
+                                lastTimeOnline: nil,
+                                timeUnit: nil
+                            ))
+                        } label: {
+                            MessagePreviewView(geometry: geometry,
+                                               isOnline: false,
+                                               sizeMultiplier: 0.15)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                         
-                        MessagePreviewView(geometry: geometry,
-                                           isOnline: false,
-                                           sizeMultiplier: 0.15)
+                        Button {
+                            navigationPath.append(.chat(
+                                userName: "funnyCats",
+                                userImage: "catPhoto",
+                                isOnline: false,
+                                lastTimeOnline: 3,
+                                timeUnit: "d"
+                            ))
+                        } label: {
+                            MessagePreviewView(geometry: geometry,
+                                               isOnline: false,
+                                               sizeMultiplier: 0.15)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(.horizontal, 8)
                 }
@@ -115,5 +162,5 @@ struct MessagesView: View {
 }
 
 #Preview {
-    MessagesView()
+    MessagesView(navigationPath: .constant([]))
 }
