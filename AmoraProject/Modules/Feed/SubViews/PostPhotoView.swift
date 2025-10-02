@@ -15,7 +15,7 @@ struct PostPhotoView: View {
             HStack {
                 ReelsButton(photo: "catPhoto",
                             geometry: geometry,
-                            sizeMultiplier: 0.1)
+                            sizeMultiplier: 0.22)
                 
                 Button {
                     print("NameButton pressed")
