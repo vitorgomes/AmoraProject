@@ -11,7 +11,7 @@ struct FeedView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                HeaderView(mode: .feed)
+                HeaderView(mode: .feed, geometry: geometry)
                     .padding(.horizontal, 8)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -96,10 +96,10 @@ struct FeedView: View {
                 
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
-                        PostPhotoView()
+                        PostPhotoView(geometry: geometry)
                             .frame(height: geometry.size.height * 0.6)
                         
-                        PostPhotoView()
+                        PostPhotoView(geometry: geometry)
                             .frame(height: geometry.size.height * 0.6)
                     }
                 }
