@@ -21,6 +21,7 @@ import SwiftUI
 struct HeaderView: View {
     @State var mode: HeaderMode
     @State var geometry: GeometryProxy
+    @Binding var navigationPath: [NavigationDestination]
     
     var body: some View {
         switch mode {
@@ -35,15 +36,17 @@ struct HeaderView: View {
                 }
                 
                 Spacer()
-                
+
                 Button {
                     print("NotificationsButton pressed")
+                    navigationPath.append(.notifications)
                 } label: {
                     Image(systemName: "heart")
                 }
 
                 Button {
                     print("MessagesButton pressed")
+                    navigationPath.append(.messages)
                 } label: {
                     Image(systemName: "paperplane")
                 }
@@ -54,12 +57,15 @@ struct HeaderView: View {
             HStack {
                 Button {
                     print("BackButton pressed")
+                    if !navigationPath.isEmpty {
+                        navigationPath.removeLast()
+                    }
                 } label: {
                     HStack {
                         Image(systemName: "chevron.backward")
                     }
                 }
-
+                
                 Button {
                     print("AccountButton pressed")
                 } label: {
@@ -79,12 +85,15 @@ struct HeaderView: View {
                 HStack {
                     Button {
                         print("BackButton pressed")
+                        if !navigationPath.isEmpty {
+                            navigationPath.removeLast()
+                        }
                     } label: {
                         HStack {
                             Image(systemName: "chevron.backward")
                         }
                     }
-
+                    
                     Button {
                         print("AccountButton pressed")
                     } label: {
@@ -126,10 +135,13 @@ struct HeaderView: View {
             HStack {
                 Button {
                     print("BackButton pressed")
+                    if !navigationPath.isEmpty {
+                        navigationPath.removeLast()
+                    }
                 } label: {
                     HStack {
                         Image(systemName: "chevron.backward")
-                            .font(.title)
+                            .bold()
                     }
                 }
                 
@@ -146,7 +158,7 @@ struct HeaderView: View {
                             )
                             .clipShape(Circle())
                     }
-
+                    
                     Button {
                         print("ChatConfigurationButton pressed")
                     } label: {
@@ -185,7 +197,7 @@ struct HeaderView: View {
                     Image(systemName: "phone")
                         .bold()
                 }
-
+                
                 Button {
                     print("VideoCallButton pressed")
                 } label: {
@@ -200,19 +212,19 @@ struct HeaderView: View {
 
 #Preview("Header for FeedView") {
     GeometryReader { geometry in
-        HeaderView(mode: .feed, geometry: geometry)
+        HeaderView(mode: .feed, geometry: geometry, navigationPath: .constant([]))
     }
 }
 
 #Preview("Header for NotificationsView") {
     GeometryReader { geometry in
-        HeaderView(mode: .notifications, geometry: geometry)
+        HeaderView(mode: .notifications, geometry: geometry, navigationPath: .constant([]))
     }
 }
 
 #Preview("Header for MessagesView") {
     GeometryReader { geometry in
-        HeaderView(mode: .messages, geometry: geometry)
+        HeaderView(mode: .messages, geometry: geometry, navigationPath: .constant([]))
     }
 }
 
@@ -223,6 +235,7 @@ struct HeaderView: View {
                                isOnline: false,
                                lastTimeOnline: 1,
                                timeUnit: "h"),
-                   geometry: geometry)
+                   geometry: geometry,
+                   navigationPath: .constant([]))
     }
 }

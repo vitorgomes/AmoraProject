@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct NotificationsView: View {
+    @Binding var navigationPath: [NavigationDestination]
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                HeaderView(mode: .notifications, geometry: geometry)
+                HeaderView(mode: .notifications,
+                           geometry: geometry,
+                           navigationPath: $navigationPath)
                     .padding(.bottom, 16)
                     .padding(.leading, 8)
                 
@@ -57,5 +61,5 @@ struct NotificationsView: View {
 }
 
 #Preview {
-    NotificationsView()
+    NotificationsView(navigationPath: .constant([]))
 }

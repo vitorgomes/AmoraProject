@@ -8,15 +8,23 @@
 import SwiftUI
 
 struct ChatView: View {
+    let userName: String
+    let userImage: String
+    let isOnline: Bool
+    let lastTimeOnline: Int?
+    let timeUnit: String?
+    @Binding var navigationPath: [NavigationDestination]
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                HeaderView(mode: .chat(userName: "funnyCats",
-                                       userImage: "catPhoto",
-                                       isOnline: false,
-                                       lastTimeOnline: 1,
-                                       timeUnit: "h"),
-                           geometry: geometry)
+                HeaderView(mode: .chat(userName: userName,
+                                       userImage: userImage,
+                                       isOnline: isOnline,
+                                       lastTimeOnline: lastTimeOnline,
+                                       timeUnit: timeUnit),
+                           geometry: geometry,
+                           navigationPath: $navigationPath)
                 ScrollView {
                     LazyVStack(spacing: 2) {
                         HStack {
@@ -41,7 +49,7 @@ struct ChatView: View {
                         }
                         
                         HStack(alignment: .bottom) {
-                            Image("catPhoto")
+                            Image(userImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(
@@ -85,5 +93,10 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView()
+    ChatView(userName: "funnyCats",
+             userImage: "catPhoto",
+             isOnline: false,
+             lastTimeOnline: 1,
+             timeUnit: "h",
+             navigationPath: .constant([]))
 }
