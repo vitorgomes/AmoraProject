@@ -13,7 +13,7 @@ struct MessagesView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                HeaderView(mode: .messages)
+                HeaderView(mode: .messages, geometry: geometry)
                     .padding(.bottom, 16)
                     .padding(.horizontal, 8)
                 

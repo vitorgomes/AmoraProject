@@ -11,7 +11,7 @@ struct NotificationsView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                HeaderView(mode: .notifications)
+                HeaderView(mode: .notifications, geometry: geometry)
                     .padding(.bottom, 16)
                     .padding(.leading, 8)
                 
